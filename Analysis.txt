@@ -1,0 +1,143 @@
+Analysis Project Unscramble Computer Science Problems
+by Christoph Knoop
+
+
+
+TASK0
+
+import csv: 1 process
+
+open texts, calls = 6 processes
+
+def find_first_record(data): 2 processes, no change due to larger parameters = 0(n+2)
+
+def find_last_record(data): 2 processes, no change due to larger parameters = 0(n+2)
+
+def find_first_text(texts):  5 processes, no change due to large parameters = O(n+5)
+
+def find_last_call(calls): 6 processes, no change due to large parameters = O(n+6)
+
+def text_output(text,calls): 2 processes, no change due to large parameters = O(n+2)
+
+Every Function is called only once. 
+
+O-Notation of the whole algorithm (loading data included):
+O = (n+24).
+
+
+
+
+
+
+TASK1
+
+import csv: 1 process
+
+open texts, calls = 6 processes
+
+def count_unique_listvalues(list_to_count): 3 processes, no change due to larger parameters = 0(n+3)
+
+def collect_telnumbers_from_list(number_list): one for-loop with 3 processes (included for-statement), order is linear. 2 processes outside the loop, no change due to larger parameters = 0(3n+2)
+
+def count_telnumbers_in_lists(*args): one for-loop with 4 processes (included for-statement). Inside the for-loop, the function collegt_telnumber_from_list is called, so another forloop, order is square. 3 processes outside the loop, no change due to larger parameters = 0(4n^2+3)
+
+O-Notation of the whole algorithm (loading data included): 
+O = (7n^2+13) ,order is square.
+
+
+
+
+
+
+
+
+TASK2
+
+
+import csv: 1 process
+
+open texts, calls = 6 processes
+
+def return_unique_listvalues(list_to_count): 2 processes, no change due to larger parameters = 0(n+2)
+
+def collect_telnumbers_from_list(number_list): one for-loop with 3 processes (included for-statement), order is linear. 2 processes outside the loop, no change due to larger parameters = 0(3n+2)
+
+def check_every_row(data, numbers_list): two for-loops with 6 processes for every iteration plus on if-statement (every number has to iterate through the whole dataset, 5213 rows. 
+= 0((6+5213)n^2+2) 
+
+def find_highest_dictvalue(dict): 3 processes, no change due to larger parameters = 0(n+3)
+
+def find_longest_telephonetime(data): 6 processes, no change due to larger parameters = 0(n+6)
+
+O-Notation of the whole algorithm (loading data included): 
+O = (5222n^2+18), order is square.
+
+
+
+
+
+
+
+
+
+
+TASK3
+
+
+import csv: 1 process
+
+open texts, calls = 6 processes
+
+def identify_prefixes(number): if-clauses, partly nested. We have to check the complete calls-dataset, means: 5213 rows. In a worst-case-szenario we have four processes for every row (means: up to 4 + 5213) = O(5217n), order is linear. 
+
+def sort_values(list_to_sort): 2 processes, no change due to larger parameters = 0(n+2)
+
+def find_numbers_called_from_Bangalore(data): one for-loop with 3 processes for every iteration. Nested if-statement inside the foreloop that calls identify_prefixes(). Worst-case is 1, because in every for-loop only one number is tested against a single string. Outside the foreloop, function sort_values is called once. O=(4n+3)
+
+def print_all_areacodes(list_prefixes): for-loop with two processes inside, also 3 processes with no change due to larger parameters. = O(2n+3)
+
+def count_bangalore_prefix(list_numbers): for loop with a nested if-clause, that checks one element with one string. So in worst-case-scenario there are 4 processes in the for-loop. 
+= O(4n)
+
+def percentage_inner_bangalore_calls(list_numbers): 3 processes(one process is call of function count_bangalore_prefix()), no change due to larger parameters = 0(n+3)
+
+def print_percentage_innercalls(percent): 1 process, no change due to larger parameters = 0(1)
+
+def examine_bangalore_calls(data): final function calling the helper-functions. 4 processes (function calls), no change due to larger parameters = 0(n+4)
+
+
+O-Notation of the whole algorithm (loading data included): 
+O = (5230n+22), order is linear.
+
+
+
+
+
+
+
+TASK4
+
+import csv: 1 process
+
+open texts, calls = 6 processes
+
+def delete_duplicates(list_with_duplicates): 3 processes, no change due to larger parameters = 0(n+3)
+
+def find_all_numbers(data): includes for-loop with 5 processes, two of them function calls. Also includes 1 process without any change of processnumber due to larger parameters. = O(5n+1)
+
+def compare_lists(list1, list2): List comprehension with two processes inside each for-loop. Also: If-clause included, compares one string with elements in another list. Worst-case-scenario is length of that list, in our case 497 (length of list with all called unique numbers. = O((3+497)n+1)
+
+def clean_caller_list(calls, texts): Including for-loop with 2 process, but that is a function call for function compare_lists(). That function has also a forloop, so order is square. Also we have 6 processes where the length of the parameter has no impact. = O(2n^2+6)
+
+def print_marketing_nums(calls, texts): for-loop with 2 process for each iteration. 3 processes, no change due to larger parameters. = O(2n+3)
+
+O-Notation of the whole algorithm (loading data included): 
+O = (510n^2+21), order is square.
+
+
+
+
+
+
+
+
