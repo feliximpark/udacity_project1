@@ -46,98 +46,35 @@ The percentage should have 2 decimal digits
 """
 # Part A
 
-def identify_prefixes(number):
-    # collect all prefixes with parentheses
-    if number[:2] == "(0":
-        # identify the Bangalore area code
-        if number[:5] == "(080)":
-            return "(080)"
-        # identify every other area code
-        else:
-            split_string = number.split(")")
-            prefix = split_string[0] + ")"
-            return prefix
-    # check for mobile numbers (all with space in the middle)
-    elif " " in number: 
-        split_string = number.split(" ")
-        return split_string[0][:4]
-    elif number[:3]=="140":
-        return number[:3]
-    else: 
-        return "no prefix found"
-
-# sort values with built-in method sorted()
-def sort_values(list_to_sort):
-    sorted_list = sorted(list_to_sort)
-    return sorted_list
-
 # collect all numbers called from Bangalore, give back sorted list
-def find_numbers_called_from_Bangalore(data): 
-    list_prefixes = [] # list for collecting prefixes and area codes
+def find_numbers_called_from_Bangalore(data):
+    called_numbers = [] # set for collecting prefixes and area codes
     for i in range(len(data)):
-        row = data[i]
-        if identify_prefixes(row[0])=="(080)":
-            list_prefixes.append(identify_prefixes(row[1]))
-    list_prefixes_ordered = sort_values(list_prefixes)
-    return list_prefixes_ordered
+        if data[i][0][:5] == "(080)":
+            if data[i][1][0] == "(":
+                index_nr = data[i][1].find(")")
+                #saving area-code without brackets
+                called_numbers.append(data[i][1][1:index_nr])
+            elif data[i][1][:3] == "140":
+                called_numbers.append("140")
+            else:
+                called_numbers.append(data[i][1][:4])
+    return called_numbers
 
 # print out results part A
-def print_all_areacodes(list_prefixes):
-    set_prefixes = set(list_prefixes)
-    ordered_prefixes = sort_values(set_prefixes)
+def print_all_areacodes(set_prefixes):
     print("The numbers called by people in Bangalore have codes:")
-    for elem in ordered_prefixes:
+    for elem in set_prefixes:
         print(elem)
 
-# part B
-# count bangalor-numbers called from Bangalore
-def count_bangalore_prefix(list_numbers): 
-    counter = 0
-    for elem in list_numbers: 
-        if elem == "(080)": 
-            counter +=1
-    return counter
-
-# calculate percentag share
-def percentage_inner_bangalore_calls(list_numbers):
-    int_b_to_b_calls = count_bangalore_prefix(list_numbers) 
-    int_all_b_calls = len(list_numbers)
-    return (int_b_to_b_calls / int_all_b_calls) * 100
-
-# prepare print-Statement
-def print_percentage_innercalls(percent):
-    return f"{round(percent,2)} percent of calls from fixed lines in "\
-        "Bangalore are calls to other fixed lines in Bangalore."
-
-# final function calling helper-functions
-def examine_bangalore_calls(data): 
-    list_numbers = find_numbers_called_from_Bangalore(data)
-    print_all_areacodes(list_numbers)
-    percentage_innercalls = percentage_inner_bangalore_calls(list_numbers)
-    print(print_percentage_innercalls(percentage_innercalls))
+def examine_bangalore_calls(data):
+    list_all_called = find_numbers_called_from_Bangalore(data)
+    set_unique_called = sorted(set(list_all_called))
+    print_all_areacodes(set_unique_called)
+    # Part B
+    number_innercalls = list_all_called.count("080")
+    percentage_innercalls = number_innercalls / len(list_all_called) * 100
+    print(f"{round(percentage_innercalls,2)} percent of calls from fixed " \
+        "lines in Bangalore are calls to other fixed lines in Bangalore.")
 
 examine_bangalore_calls(calls)
-
-
-
-
-
-
-
-
-# def test(): 
-#     assert identify_prefixes("(080)345 6667") == "(080)"
-#     assert identify_prefixes("12344456") == "no prefix found"
-#     assert identify_prefixes("1234 5567") == "1234"
-#     assert identify_prefixes("140667890") == "140"
-#     assert sort_values(["03", "05", "01", "04"]) == ["01", "03", "04", "05"]
-#     assert sort_values(['01', '04', '03', '(080)', '(070)', '(07030)']) == \
-#         ['(070)', '(07030)', '(080)', '01', '03', '04']
-#     assert find_numbers_called_from_Bangalore(\
-#         [["(080) 234", "140556"], ["140", "567"], \
-#             ["(080)666777", "8969 456"], ["(080)447", "(080)4456"]]) == \
-#             ["(080)","140", "8969"]
-#     assert count_bangalore_prefix(["(080)", "080", "(070)", "140", "(080)"])==\
-#         2
-#     print("all tests finished")
-# test()

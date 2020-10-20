@@ -20,34 +20,15 @@ Print messages:
 "First record of texts, <incoming number> texts <answering number> at time <time>"
 "Last record of calls, <incoming number> calls <answering number> at time <time>, lasting <during> seconds"
 """
-# find first element
-def find_first_record(data):
-    first_record = data[0]
-    return first_record
-
-#find last element
-def find_last_record(data):
-    last_record = data[-1]
-    return last_record
-
 # find data of the first text in texts-dataset
 def find_first_text(texts):
-    first_text = find_first_record(texts)
-    incoming_number = first_text[0]
-    answering_number = first_text[1]
-    time = first_text[2]
-    return f"First record of texts, {incoming_number} texts "\
-         f"{answering_number} at time {time}"
+    return f"First record of texts, {texts[0][0]} texts "\
+         f"{texts[0][1]} at time {texts[0][2]}"
 
 # find data of the last call in calls-dataset
 def find_last_call(calls): 
-    last_call = find_last_record(calls)
-    incoming_number = last_call[0]
-    answering_number = last_call[1]
-    time = last_call[2]
-    seconds = last_call[3]
-    return f"Last record of calls, {incoming_number} calls "\
-        f"{answering_number} at time {time}, lasting {seconds} seconds"
+    return f"Last record of calls, {calls[-1][0]} calls "\
+        f"{calls[-1][1]} at time {calls[-1][2]}, lasting {calls[-1][3]} seconds"
 
 #final function calling helper-functions
 def text_output(texts, calls):
@@ -55,16 +36,5 @@ def text_output(texts, calls):
     print(find_last_call(calls))
 
 text_output(texts,calls)
-
-
-# def tests():
-#     assert find_first_record(texts) == \
-#         ['97424 22395', '90365 06212', '01-09-2016 06:03:22']
-#     assert find_last_record(calls) == \
-#         ['98447 62998', '(080)46304537', '30-09-2016 23:57:15', '2151'] 
-    
-#     print("run all tests")
-
-#tests()        
 
 

@@ -25,59 +25,22 @@ Print a message:
 The list of numbers should be print out one per line in lexicographic order with no duplicates.
 """
 
-def delete_duplicates(list_with_duplicates):
-    list_to_set = set(list_with_duplicates)
-    set_to_list = list(list_to_set)
-    return set_to_list
-
-def find_all_numbers(data):
-    list_all_callers = []
-    list_all_called = []
-    for i in range(len(data)): 
-        row = data[i] 
-        list_all_callers.append(row[0])
-        list_all_called.append(row[1])
-        list_all_callers_clean = delete_duplicates(list_all_callers)
-        list_all_called_clean = delete_duplicates(list_all_called)
+def check_all_numbers(call, text):
+    telemarketers = set()
+    text_sender = set([txt[0] for txt in text])
+    text_receiver = set([txt[1] for txt in text])
+    caller = set([cll[0] for cll in call])
+    call_receiver = set([cll[1] for cll in call])
+    for call_nr in caller: 
+        if call_nr not in text_sender and call_nr not in text_receiver and \
+            call_nr not in call_receiver: 
+            telemarketers.add(call_nr)
+    return sorted(telemarketers) 
     
-    return list_all_callers_clean, list_all_called_clean
-
-def compare_lists(list1, list2): 
-    # give back only values of list1, that are NOT in list2
-    list_cleaned = [el for el in list1 if el not in list2]
-    return list_cleaned
-
-def clean_caller_list(calls, texts):
-    caller_list, called_list = find_all_numbers(calls)
-    textsender_list, textrecipient_list = find_all_numbers(texts)
-    lists_to_compare = [called_list, textsender_list, textrecipient_list]
-    print(len(called_list))
-    print(len(textsender_list))
-    print(len(textrecipient_list))
-    for li in lists_to_compare: 
-        caller_list = compare_lists(caller_list, li)
-    return caller_list
-
 def print_marketing_nums(calls, texts):
-    nums_list = clean_caller_list(calls, texts)
-    # sort list
-    nums_list = sorted(nums_list)
+    set_telemarketers = check_all_numbers(calls, texts)
     print("These numbers could be telemarketers: ")
-    for num in nums_list: 
+    for num in set_telemarketers: 
         print(num)
 
-print(print_marketing_nums(calls, texts))
-
-
-# def test(): 
-#     assert delete_duplicates(["(080)344", "140756", "080344", "(080)344"]) ==\
-#         ["(080)344", "080344", "140756"]
-#     assert compare_lists([1,2,3,4,5], [3,4,5,6,7,8]) == [1,2]
-#     assert compare_lists(["123", "456", "7", "6"], ["123", "6", "4567"]) == \
-#         ["456", "7"]
-#     assert find_all_numbers([["123", "456", "789"], ["321", "654"], \
-#         ["123", "987", "111", "222" ]]) == \
-#             (["321", "123"], ["456", "654", "987"])
-#     print("all tests finished")
-
-# test()
+print_marketing_nums(calls, texts)
