@@ -35,7 +35,6 @@ def create_dict(data):
 
 #find highest value and corresponding key
 def find_highest_dictvalue(dic):
-    print(len(dic))
     highest_key = max(dic, key=dic.get)
     highest_value = dic[highest_key]
     return highest_key, highest_value
